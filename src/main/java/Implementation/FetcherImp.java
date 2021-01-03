@@ -28,7 +28,9 @@ public class FetcherImp implements Fetcher {
             if (statusCode == 200) {
                 return response.body();
             } throw new java.io.IOException(
-                    "Exception while making request. STATUS_CODE = " + statusCode + ". For url = " + url);
+                    "Exception while making request. STATUS_CODE = " +
+                            statusCode + ". For url = " + url + "\n" + response.body()
+            );
         } catch (java.net.URISyntaxException|java.io.IOException|java.lang.InterruptedException e) {
             System.out.println(e);
             return "{}";

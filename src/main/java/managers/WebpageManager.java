@@ -41,6 +41,13 @@ public class WebpageManager {
         return webpages;
     }
 
+    public static List<Webpage> fetchWebpagesFromDBWithoutTransaction (Session session) {
+        List<Webpage> webpages = session
+                .createQuery("SELECT m FROM Webpage m", Webpage.class)
+                .getResultList();
+        return webpages;
+    }
+
     public static void saveWebpageToDB (Session session, Webpage webpage) {
         session.persist(webpage);
     }

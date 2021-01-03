@@ -8,14 +8,13 @@ import components.UpdateQueryExecutor;
 import managers.GoalManager;
 import managers.WebpageManager;
 import models.Goal;
-import models.GoalReachesTrafficSource;
 import models.Webpage;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public abstract class DatabaseFiller {
@@ -42,18 +41,26 @@ public abstract class DatabaseFiller {
     }
 
     private void __fillDatabase__(Session session) {
-        List<Webpage> webpages = WebpageManager.fetchWebpagesFromDB(session);
-        for (Webpage webpage: webpages.subList(0, 1)) {
+        List<Webpage> webpages = WebpageManager.fetchWebpagesFromDBWithoutTransaction(session);
+        int counter = 0;
+        for (Webpage webpage: webpages.subList(2, webpages.size())) {
+            counter++;
+            System.out.println(counter);
             List<Goal> goals = GoalManager.getAllGoalsFromDBForCounter(session, webpage);
-            goals.stream().map(goal -> fetchGoalReaches(webpage, goal))
-                    .map(this::createInsertQuery).forEach(query -> System.out.println(query));
-                    //.forEach(this::executeInsertQuery);
+            goals.stream()
+                    .peek(goal -> System.out.println(this.getClass().getSimpleName() + " - " + webpage.getPageId() + " - " + goal.getName()))
+                    .map(goal -> fetchGoalReaches(webpage, goal))
+                    .map(this::createInsertQuery).filter(Objects::nonNull)
+                    //.forEach(query -> System.out.println(query));
+                    .forEach(this::executeInsertQuery);
         }
     }
 
     private Map<String, Object> fetchGoalReaches(Webpage webpage, Goal goal) {
         String request = createRequest(webpage, goal);
         Map<String, Object> response = parser.parse(fetcher.fetch(request));
+        response.put("webpageId", webpage.getPageId());
+        response.put("goalId", goal.getGoalId());
         return response;
     }
 
@@ -69,17 +76,10 @@ public abstract class DatabaseFiller {
         return request.toString();
     }
 
-    private String createInsertQuery(Map<String, Object> response) {
-        List timeStamps = ((List<List>) response.get("time_intervals")).stream()
-                .map(interval -> interval.get(0)).collect(Collectors.toList());
-        List<Map<String, List>> data = (List) response.get("data");
-        return createStatement(data, timeStamps);
-    }
+    protected abstract String createInsertQuery(Map<String, Object> response);
 
     private void executeInsertQuery(String insertQuery) {
         SessionWrapper.wrapWithStringArg(new UpdateQueryExecutor(), insertQuery);
     }
-
-    protected abstract String createStatement(List<Map<String, List>> data, List timeStamp);
 
 }

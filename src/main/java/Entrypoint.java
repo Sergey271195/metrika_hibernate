@@ -1,5 +1,6 @@
 import Implementation.FetcherImp;
 import Implementation.JsonParserImp;
+import Sources.SearchEngine.SearchEngineFiller;
 import Sources.SearchEngine.SearchEngineUpdater;
 import Implementation.SessionManagerImp;
 import Interfaces.SessionManager;
@@ -8,6 +9,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+
+import java.time.LocalDate;
 
 
 public class Entrypoint {
@@ -24,17 +27,20 @@ public class Entrypoint {
         JsonParserImp jsonParser = new JsonParserImp();
         JandexRequester requester = new JandexRequester(fetcher, jsonParser, session);
 
-        SessionManager sm = new SessionManagerImp();
-        SearchEngineManager sem = new SearchEngineManager(sm);
-        SearchEngineUpdater seup = new SearchEngineUpdater(sm, fetcher, jsonParser);
-        seup.updateDatabase();
+        SessionManager sessionManager = new SessionManagerImp();
+        SearchEngineManager seManager = new SearchEngineManager(sessionManager);
 
-        //Goal result = (Goal) session.createSQLQuery("SELECT * FROM goal WHERE goalId = 63506995;").addEntity(Goal.class).getSingleResult();
-        //System.out.println(result.getName());
-
+        //Search engine update
+        SearchEngineUpdater seUpdater = new SearchEngineUpdater(sessionManager, fetcher, jsonParser);
+        seUpdater.updateDatabase();
+        //Traffic source update
         DatabaseUpdater updater = new DatabaseUpdater(fetcher, jsonParser, session);
         updater.updateDatabase();
 
+        //SearchEngineFiller seFiller = new SearchEngineFiller(seManager, LocalDate.parse("2021-01-02"), fetcher, jsonParser);
+        //seFiller.fillDatabase();
+        //Goal result = (Goal) session.createSQLQuery("SELECT * FROM goal WHERE goalId = 63506995;").addEntity(Goal.class).getSingleResult();
+        //System.out.println(result.getName());
         /*List<Long> list = Arrays.asList(65064478L, 67865518L,65156065L,56247157L,53667862L,37960820L,42267299L,58976794L,67426333L,69704290L);
         System.out.println(list);
         List<Webpage> webpages =  WebpageManager.fetchWebpagesFromDB(session);

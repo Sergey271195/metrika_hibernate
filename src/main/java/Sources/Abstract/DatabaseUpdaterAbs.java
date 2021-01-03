@@ -46,7 +46,8 @@ public abstract class DatabaseUpdaterAbs {
         if (!dbIsUpToDate()) {
             List<Webpage> webpagesToUpdate = checker.getUpdateList();
 
-            webpagesToUpdate.stream().peek(w -> System.out.println(w.getPageId() + " - " + w.getName()))
+            webpagesToUpdate.stream()
+                    .peek(w -> System.out.println(this.getClass().getSimpleName() + " - " + w.getPageId() + " - " + w.getName()))
                     .map(webpage -> fetchGoalsFromMetrika(webpage))
                     .flatMap(responseList -> responseList.stream())
                     .map(response -> createInsertQuery(response)).filter(Objects::nonNull)

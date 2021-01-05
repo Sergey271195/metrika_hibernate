@@ -3,6 +3,7 @@ import Interfaces.SessionManager;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -37,12 +38,13 @@ public abstract class SourceManager<T> {
     }
 
     public List<String> mapGoalsToSource(List<Map<String, List>> metrics, List<Long> goals) {
-        List<String> insertValues = null;
+        List<String> insertValues = new ArrayList<>();
         Map<String, List> sourceList = groupMetricsByDimensions(metrics);
         for (String source: sourceList.keySet()) {
-            insertValues = IntStream.range(0, goals.size())
+            List<String> intermediateValues = IntStream.range(0, goals.size())
                     .mapToObj(i -> goals.get(i) + ", '" + source + "', " + sourceList.get(source).get(i))
                     .collect(Collectors.toList());
+            insertValues.addAll(intermediateValues);
         }
         return insertValues;
     }

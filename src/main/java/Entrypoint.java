@@ -1,17 +1,12 @@
 import Implementation.FetcherImp;
 import Implementation.JsonParserImp;
-import Sources.ReferralSource.ReferralSourceFiller;
-import Sources.ReferralSource.ReferralSourceManager;
+import Sources.AdvEngine.AdvEngineUpdater;
+import Sources.Factory.SourceManagerFactory;
 import Sources.ReferralSource.ReferralSourceUpdater;
-import Sources.SearchEngine.SearchEngineFiller;
 import Sources.SearchEngine.SearchEngineUpdater;
 import Implementation.SessionManagerImp;
 import Interfaces.SessionManager;
-import Sources.SearchEngine.SearchEngineManager;
-import Sources.SocialNetwork.SocialNetworkFiller;
-import Sources.SocialNetwork.SocialNetworkManager;
 import Sources.SocialNetwork.SocialNetworkUpdater;
-import models.ReferralSource;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -35,37 +30,17 @@ public class Entrypoint {
         JandexRequester requester = new JandexRequester(fetcher, jsonParser, session);
 
         SessionManager sessionManager = new SessionManagerImp();
+        SourceManagerFactory sourceFactory = new SourceManagerFactory(sessionManager);
 
         //Traffic source update
-        DatabaseUpdater updater = new DatabaseUpdater(fetcher, jsonParser, session);
-        updater.updateDatabase();
+        TrafficSourceUpdater tsUpdater = new TrafficSourceUpdater(fetcher, jsonParser, session);
+        tsUpdater.updateDatabase();
 
-        //Search engine update
-        SearchEngineUpdater seUpdater = new SearchEngineUpdater(sessionManager, fetcher, jsonParser);
-        seUpdater.updateDatabase();
+        DatabaseUpdater dbUpdater = new DatabaseUpdater(fetcher, jsonParser, sourceFactory);
+        dbUpdater.updateDatabase();
 
-        //Social network update
-        SocialNetworkUpdater snUpdater = new SocialNetworkUpdater(sessionManager, fetcher, jsonParser);
-        snUpdater.updateDatabase();
-
-        //Referral source update
-        ReferralSourceUpdater rsUpdater = new ReferralSourceUpdater(sessionManager, fetcher, jsonParser);
-        rsUpdater.updateDatabase();
-
-        //Search engine filler
-        //SearchEngineManager seManager = new SearchEngineManager(sessionManager);
-        //SearchEngineFiller seFiller = new SearchEngineFiller(seManager, LocalDate.parse("2021-01-02"), fetcher, jsonParser);
-        //seFiller.fillDatabase();
-
-        //Social network filler
-        //SocialNetworkManager snManager = new SocialNetworkManager(sessionManager);
-        //SocialNetworkFiller snFiller = new SocialNetworkFiller(snManager, LocalDate.parse("2021-01-03"), fetcher, jsonParser);
-        //snFiller.fillDatabase();
-
-        //Referral source filler
-        ReferralSourceManager rsManager = new ReferralSourceManager(sessionManager);
-        ReferralSourceFiller rsFiller = new ReferralSourceFiller(rsManager, LocalDate.parse("2021-01-03"), fetcher, jsonParser);
-        rsFiller.fillDatabase();
+        DatabaseFiller dbFiller = new DatabaseFiller(fetcher, jsonParser, sourceFactory);
+        dbFiller.fillUntilDate(LocalDate.parse("2021-01-04"));
 
         session.close();
     }

@@ -4,6 +4,7 @@ import Interfaces.Fetcher;
 import Interfaces.JsonParser;
 import Interfaces.SessionManager;
 import Sources.Abstract.DatabaseUpdaterAbs;
+import Sources.Abstract.SourceManager;
 import models.GoalsReachesByReferralSource;
 
 import java.util.List;
@@ -12,15 +13,15 @@ import java.util.stream.Collectors;
 
 public class ReferralSourceUpdater extends DatabaseUpdaterAbs {
 
-    private ReferralSourceManager sourceManager;
+    private SourceManager sourceManager;
     private static String dimensions = "ym:s:lastsignReferalSource";
 
     private static String insertQuery =
             "INSERT INTO goalsreferral (id, webpage_id, date, goal_id, referral_id, reaches)\nVALUES\n\t";
 
-    public ReferralSourceUpdater(SessionManager manager, Fetcher fetcher, JsonParser parser) {
-        super(GoalsReachesByReferralSource.class, dimensions, manager, fetcher, parser);
-        this.sourceManager = new ReferralSourceManager(manager);
+    public ReferralSourceUpdater(SourceManager sourceManager, Fetcher fetcher, JsonParser parser) {
+        super(GoalsReachesByReferralSource.class, dimensions, fetcher, parser);
+        this.sourceManager = sourceManager;
     }
 
 
@@ -31,8 +32,6 @@ public class ReferralSourceUpdater extends DatabaseUpdaterAbs {
         if (data.size() != 0) {
             List<String> insertValues = sourceManager.mapGoalsToSource(data, goals);
             insertQuery = createNonEmptyInsertQuery(insertValues, webpageId);
-            System.out.println(insertValues);
-            System.out.println(insertQuery);
         } else {
             insertQuery =  createEmptyInsertQuery(goals, webpageId);
         }

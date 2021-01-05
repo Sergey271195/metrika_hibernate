@@ -2,6 +2,7 @@ package components;
 
 import Implementation.SessionManagerImp;
 import Interfaces.Wrappable;
+import Interfaces.WrappableWithArg;
 import Interfaces.WrappableWithStringArg;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -18,6 +19,15 @@ public class SessionWrapper {
     }
 
     public static <T> T wrapWithStringArg(WrappableWithStringArg<T> innerFucntion, String arg) {
+        Session session = new SessionManagerImp().startSession();
+        Transaction tx = session.beginTransaction();
+        T result = innerFucntion.wrap(session, arg);
+        tx.commit();
+        session.close();
+        return result;
+    }
+
+    public static <T, A> T wrapWithArg(WrappableWithArg<T, A> innerFucntion, A arg) {
         Session session = new SessionManagerImp().startSession();
         Transaction tx = session.beginTransaction();
         T result = innerFucntion.wrap(session, arg);

@@ -22,21 +22,19 @@ import java.util.stream.Collectors;
 public abstract class DatabaseUpdaterAbs {
 
     private final Class tableClass;
-    private final SessionManager manager;
     private final Fetcher fetcher;
     private final JsonParser parser;
     private final String dimensions;
     private UpdateChecker checker;
     private static String JANDEX_STAT_BY_TIME = "https://api-metrika.yandex.net/stat/v1/data/bytime?ids=";
 
-    protected static LocalDate yesterday = LocalDate.now().minusDays(1);
+    protected static LocalDate yesterday = UpdateChecker.yesterday;
 
     public DatabaseUpdaterAbs(
-            Class tableClass, String dimensions, SessionManager manager, Fetcher fetcher, JsonParser parser
+            Class tableClass, String dimensions, Fetcher fetcher, JsonParser parser
     ) {
         this.tableClass = tableClass;
         this.dimensions = dimensions;
-        this.manager = manager;
         this.fetcher = fetcher;
         this.parser = parser;
         this.checker = new UpdateChecker(tableClass);
@@ -58,7 +56,7 @@ public abstract class DatabaseUpdaterAbs {
     }
 
     private List<Map<String, Object>> fetchGoalsFromMetrika(Webpage webpage) {
-        List<Goal> goals = GoalManager.getAllGoalsFromDBForCounter(manager, webpage);
+        List<Goal> goals = new GoalManager().getGoalsForCounterWrapped(webpage);
         List<Map<String, Object>> responseList = goals.size() > 15
                 ? fetchMultGoalsData(goals, webpage.getPageId())
                 : Arrays.asList(fetchGoalsData(goals, webpage.getPageId()));

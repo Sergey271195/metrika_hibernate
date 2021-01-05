@@ -28,9 +28,18 @@
         <mapping class="models.SocialNetwork" />
         <mapping class="models.GoalsReachesBySocialNetwork" />
 
+
         <!--Referral Source-->
         <mapping class="models.ReferralSource" />
         <mapping class="models.GoalsReachesByReferralSource" />
+
+        <!--Adv Engine-->
+        <mapping class="models.AdvEngine" />
+        <mapping class="models.GoalsReachesByAdvEngine" />
+
+        <!--Search Phrase-->
+        <mapping class="models.SearchPhrase" />
+        <mapping class="models.GoalsReachesBySearchPhrase" />
 
     </session-factory>
 </hibernate-configuration>

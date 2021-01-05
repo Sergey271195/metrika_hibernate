@@ -4,6 +4,7 @@ import Interfaces.Fetcher;
 import Interfaces.JsonParser;
 import Interfaces.SessionManager;
 import Sources.Abstract.DatabaseUpdaterAbs;
+import Sources.Abstract.SourceManager;
 import models.GoalsReachesBySocialNetwork;
 
 import java.util.List;
@@ -12,15 +13,15 @@ import java.util.stream.Collectors;
 
 public class SocialNetworkUpdater extends DatabaseUpdaterAbs {
 
-    private SocialNetworkManager sourceManager;
+    private SourceManager sourceManager;
     private static String dimensions = "ym:s:lastsignSocialNetwork";
 
     private static String insertQuery =
             "INSERT INTO goalssocialnetwork (id, webpage_id, date, goal_id, network_id, reaches)\nVALUES\n\t";
 
-    public SocialNetworkUpdater(SessionManager manager, Fetcher fetcher, JsonParser parser) {
-        super(GoalsReachesBySocialNetwork.class, dimensions, manager, fetcher, parser);
-        this.sourceManager = new SocialNetworkManager(manager);
+    public SocialNetworkUpdater(SourceManager sourceManager, Fetcher fetcher, JsonParser parser) {
+        super(GoalsReachesBySocialNetwork.class, dimensions, fetcher, parser);
+        this.sourceManager = sourceManager;
     }
 
 

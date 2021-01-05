@@ -31,27 +31,39 @@ GROUP BY webpage_id;
 WITH r AS(
     SELECT* FROM
     goalssearchengine
-    WHERE goal_id = 53093223
-    AND date BETWEEN '2020-12-25' AND '2021-01-03'
+    WHERE webpage_id = 62401888
+    AND date BETWEEN '2020-12-01' AND '2021-01-04'
 )
 SELECT
+    goal_id,
     engine_id,
     sum(reaches)
 FROM r
-GROUP BY engine_id;
+GROUP BY goal_id, engine_id;
 
-WITH r AS (
-    SELECT
-        *
-    FROM goalreachestrafficsource
-    WHERE goal_id = 53093223
-    AND date BETWEEN '2020-12-25' AND '2021-01-03'
+/*PARTICULAR GOAL REACHES BY SOCIAL NETWORK FOR PERIOD*/
+WITH r AS(
+    SELECT* FROM
+    goalssocialnetwork
+    WHERE webpage_id = 62401888
+    AND date BETWEEN '2020-12-01' AND '2021-01-04'
 )
 SELECT
-    sum(organic) as org,
-    sum(direct) as dir,
-    sum(internal) as int,
-    sum(recommend) as rec,
-    sum(referral) as ref,
-    sum(social) as soc
-FROM r;
+    goal_id,
+    network_id,
+    sum(reaches)
+FROM r
+GROUP BY goal_id, network_id;
+
+/*PARTICULAR GOAL REACHES BY REFERRAL SOURCE FOR PERIOD*/
+WITH r AS(
+    SELECT* FROM
+    goalsreferral
+    WHERE webpage_id = 62401888
+    AND date BETWEEN '2020-12-01' AND '2021-01-04'
+)
+SELECT
+    referral_id,
+    sum(reaches)
+FROM r
+GROUP BY referral_id;

@@ -16,7 +16,7 @@ public class UpdateChecker implements Wrappable<Boolean> {
 
     private final Class tableClass;
     private List<Webpage> updateList;
-    private static LocalDate yesterday = LocalDate.now().minusDays(1);
+    public static LocalDate yesterday = LocalDate.now().minusDays(1);
 
     public UpdateChecker(Class tableClass) { this.tableClass = tableClass; }
 

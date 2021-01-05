@@ -1,32 +1,33 @@
-package Sources.SearchEngine;
+package Sources.SearchPhrase;
 
-import Sources.Abstract.DatabaseUpdaterAbs;
 import Interfaces.Fetcher;
 import Interfaces.JsonParser;
 import Interfaces.SessionManager;
+import Sources.Abstract.DatabaseUpdaterAbs;
 import Sources.Abstract.SourceManager;
-import models.GoalsReachesBySearchEngine;
+import models.GoalsReachesBySearchPhrase;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-
-public class SearchEngineUpdater extends DatabaseUpdaterAbs {
+public class SearchPhraseUpdater extends DatabaseUpdaterAbs {
 
     private SourceManager sourceManager;
-    private static String dimensions = "ym:s:lastsignSearchEngineRoot";
+    private static String dimensions = "ym:s:lastsignSearchPhrase";
 
     private static String insertQuery =
-            "INSERT INTO goalssearchengine (id, webpage_id, date, goal_id, engine_id, reaches)\nVALUES\n\t";
+            "INSERT INTO goalssearchphrase (id, webpage_id, date, goal_id, phrase_id, reaches)\nVALUES\n\t";
 
-    public SearchEngineUpdater(SourceManager sourceManager, Fetcher fetcher, JsonParser parser) {
-        super(GoalsReachesBySearchEngine.class, dimensions, fetcher, parser);
+    public SearchPhraseUpdater(SourceManager sourceManager, Fetcher fetcher, JsonParser parser) {
+        super(GoalsReachesBySearchPhrase.class, dimensions, fetcher, parser);
         this.sourceManager = sourceManager;
     }
 
 
     @Override
     protected String createStatement(List<Map<String, List>> data, List<Long> goals, Long webpageId) {
+
         String insertQuery = null;
         if (data.size() != 0) {
             List<String> insertValues = sourceManager.mapGoalsToSource(data, goals);
@@ -42,11 +43,12 @@ public class SearchEngineUpdater extends DatabaseUpdaterAbs {
                 .map(value ->
                         "(nextval('hibernate_sequence'), " + webpageId + ", '" + yesterday + "', " + value + ")"
                 ).collect(Collectors.joining(",\n  \t\t"));
+
         return insertQuery + values + ";";
     }
 
     private String createEmptyInsertQuery(List<Long> goals, Long webpageId) {
-        String values =  "(nextval('hibernate_sequence'), " + webpageId + ", '" + yesterday + "', " + goals.get(0) + ", 'yandex', 0)";
+        String values =  "(nextval('hibernate_sequence'), " + webpageId + ", '" + yesterday + "', " + goals.get(0) + ", '-', 0)";
         return insertQuery + values + ";";
     }
 }

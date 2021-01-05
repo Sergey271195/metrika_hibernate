@@ -1,26 +1,26 @@
-package Sources.SearchEngine;
+package Sources.AdvEngine;
 
-import Sources.Abstract.DatabaseUpdaterAbs;
 import Interfaces.Fetcher;
 import Interfaces.JsonParser;
 import Interfaces.SessionManager;
+import Sources.Abstract.DatabaseUpdaterAbs;
 import Sources.Abstract.SourceManager;
-import models.GoalsReachesBySearchEngine;
+import models.GoalsReachesByAdvEngine;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-
-public class SearchEngineUpdater extends DatabaseUpdaterAbs {
+public class AdvEngineUpdater extends DatabaseUpdaterAbs {
 
     private SourceManager sourceManager;
-    private static String dimensions = "ym:s:lastsignSearchEngineRoot";
+    private static String dimensions = "ym:s:lastsignAdvEngine";
 
     private static String insertQuery =
-            "INSERT INTO goalssearchengine (id, webpage_id, date, goal_id, engine_id, reaches)\nVALUES\n\t";
+            "INSERT INTO goalsadvengine (id, webpage_id, date, goal_id, adv_id, reaches)\nVALUES\n\t";
 
-    public SearchEngineUpdater(SourceManager sourceManager, Fetcher fetcher, JsonParser parser) {
-        super(GoalsReachesBySearchEngine.class, dimensions, fetcher, parser);
+    public AdvEngineUpdater(SourceManager sourceManager, Fetcher fetcher, JsonParser parser) {
+        super(GoalsReachesByAdvEngine.class, dimensions, fetcher, parser);
         this.sourceManager = sourceManager;
     }
 
@@ -46,7 +46,8 @@ public class SearchEngineUpdater extends DatabaseUpdaterAbs {
     }
 
     private String createEmptyInsertQuery(List<Long> goals, Long webpageId) {
-        String values =  "(nextval('hibernate_sequence'), " + webpageId + ", '" + yesterday + "', " + goals.get(0) + ", 'yandex', 0)";
+        String values =  "(nextval('hibernate_sequence'), " + webpageId + ", '" + yesterday + "', " + goals.get(0) + ", '-', 0)";
         return insertQuery + values + ";";
     }
+
 }

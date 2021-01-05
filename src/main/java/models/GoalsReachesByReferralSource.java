@@ -5,10 +5,10 @@ import java.time.LocalDate;
 
 @Entity
 @Table(
-        name = "goalssearchengine",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"goal_id", "engine_id", "date"})}
-        )
-public class GoalsReachesBySearchEngine {
+        name = "goalsreferral",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"goal_id", "referral_id", "date"})}
+)
+public class GoalsReachesByReferralSource {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,8 +22,8 @@ public class GoalsReachesBySearchEngine {
     private Goal goal;
 
     @ManyToOne
-    @JoinColumn(name = "engine_id")
-    private SearchEngine engine;
+    @JoinColumn(name = "referral_id")
+    private ReferralSource referral;
 
     @ManyToOne
     @JoinColumn(name = "webpage_id")
@@ -61,8 +61,12 @@ public class GoalsReachesBySearchEngine {
         this.goal = goal;
     }
 
-    public SearchEngine getEngine() {
-        return engine;
+    public ReferralSource getReferal() {
+        return referral;
+    }
+
+    public void setReferal(ReferralSource referal) {
+        this.referral = referal;
     }
 
     public Webpage getWebpage() {

@@ -43,7 +43,8 @@ public abstract class DatabaseFiller {
     private void __fillDatabase__(Session session) {
         List<Webpage> webpages = WebpageManager.fetchWebpagesFromDBWithoutTransaction(session);
         int counter = 0;
-        for (Webpage webpage: webpages.subList(2, webpages.size())) {
+        for (Webpage webpage: webpages) {
+            //Webpage webpage = session.get(Webpage.class, 54298305L);
             counter++;
             System.out.println(counter);
             List<Goal> goals = GoalManager.getAllGoalsFromDBForCounter(session, webpage);
@@ -61,6 +62,7 @@ public abstract class DatabaseFiller {
         Map<String, Object> response = parser.parse(fetcher.fetch(request));
         response.put("webpageId", webpage.getPageId());
         response.put("goalId", goal.getGoalId());
+        System.out.println(response);
         return response;
     }
 
@@ -71,7 +73,7 @@ public abstract class DatabaseFiller {
                 .append("&group=day&metrics=ym:s:goal").append(goal.getGoalId())
                 .append("reaches&dimensions=").append(dimensions)
                 .append("&date1=").append(creationDate)
-                .append("&date2=").append(endDate);
+                .append("&date2=").append(endDate).append("&limit=100000");
 
         return request.toString();
     }

@@ -45,6 +45,10 @@ public class MetrikaUtils {
         return (String) ((Map) responseData.get("dimensions").get(0)).get("id");
     }
 
+    public static String getDimensionName(Map<String, List> responseData) {
+        return (String) ((Map) responseData.get("dimensions").get(0)).get("name");
+    }
+
     public static List<Double> getMetriksList(Map<String, List> responseData) {
         return (List) responseData.get("metrics").stream().map(goal -> ((List) goal).get(0)).collect(Collectors.toList());
     }

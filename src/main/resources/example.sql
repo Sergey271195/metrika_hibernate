@@ -26,3 +26,32 @@ SELECT
     COUNT(DISTINCT goalId)
 FROM goal
 GROUP BY webpage_id;
+
+/*PARTICULAR GOAL REACHES BY SEARCH ENGINE FOR PERIOD*/
+WITH r AS(
+    SELECT* FROM
+    goalssearchengine
+    WHERE goal_id = 53093223
+    AND date BETWEEN '2020-12-25' AND '2021-01-03'
+)
+SELECT
+    engine_id,
+    sum(reaches)
+FROM r
+GROUP BY engine_id;
+
+WITH r AS (
+    SELECT
+        *
+    FROM goalreachestrafficsource
+    WHERE goal_id = 53093223
+    AND date BETWEEN '2020-12-25' AND '2021-01-03'
+)
+SELECT
+    sum(organic) as org,
+    sum(direct) as dir,
+    sum(internal) as int,
+    sum(recommend) as rec,
+    sum(referral) as ref,
+    sum(social) as soc
+FROM r;

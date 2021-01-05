@@ -48,7 +48,9 @@ public abstract class SourceManager<T> {
     }
 
     private static String getDimensionId(Map<String, List> responseData) {
-        return (String) ((Map) responseData.get("dimensions").get(0)).get("id");
+        String id = (String) ((Map) responseData.get("dimensions").get(0)).get("id");
+        String name = (String) ((Map) responseData.get("dimensions").get(0)).get("name");
+        return id == null ? name : id;
     }
 
     private static List<Double> getMetriksList(Map<String, List> responseData) {

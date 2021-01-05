@@ -1,10 +1,17 @@
 import Implementation.FetcherImp;
 import Implementation.JsonParserImp;
+import Sources.ReferralSource.ReferralSourceFiller;
+import Sources.ReferralSource.ReferralSourceManager;
+import Sources.ReferralSource.ReferralSourceUpdater;
 import Sources.SearchEngine.SearchEngineFiller;
 import Sources.SearchEngine.SearchEngineUpdater;
 import Implementation.SessionManagerImp;
 import Interfaces.SessionManager;
 import Sources.SearchEngine.SearchEngineManager;
+import Sources.SocialNetwork.SocialNetworkFiller;
+import Sources.SocialNetwork.SocialNetworkManager;
+import Sources.SocialNetwork.SocialNetworkUpdater;
+import models.ReferralSource;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -28,28 +35,37 @@ public class Entrypoint {
         JandexRequester requester = new JandexRequester(fetcher, jsonParser, session);
 
         SessionManager sessionManager = new SessionManagerImp();
-        SearchEngineManager seManager = new SearchEngineManager(sessionManager);
 
-        //Search engine update
-        SearchEngineUpdater seUpdater = new SearchEngineUpdater(sessionManager, fetcher, jsonParser);
-        seUpdater.updateDatabase();
         //Traffic source update
         DatabaseUpdater updater = new DatabaseUpdater(fetcher, jsonParser, session);
         updater.updateDatabase();
 
+        //Search engine update
+        SearchEngineUpdater seUpdater = new SearchEngineUpdater(sessionManager, fetcher, jsonParser);
+        seUpdater.updateDatabase();
+
+        //Social network update
+        SocialNetworkUpdater snUpdater = new SocialNetworkUpdater(sessionManager, fetcher, jsonParser);
+        snUpdater.updateDatabase();
+
+        //Referral source update
+        ReferralSourceUpdater rsUpdater = new ReferralSourceUpdater(sessionManager, fetcher, jsonParser);
+        rsUpdater.updateDatabase();
+
+        //Search engine filler
+        //SearchEngineManager seManager = new SearchEngineManager(sessionManager);
         //SearchEngineFiller seFiller = new SearchEngineFiller(seManager, LocalDate.parse("2021-01-02"), fetcher, jsonParser);
         //seFiller.fillDatabase();
-        //Goal result = (Goal) session.createSQLQuery("SELECT * FROM goal WHERE goalId = 63506995;").addEntity(Goal.class).getSingleResult();
-        //System.out.println(result.getName());
-        /*List<Long> list = Arrays.asList(65064478L, 67865518L,65156065L,56247157L,53667862L,37960820L,42267299L,58976794L,67426333L,69704290L);
-        System.out.println(list);
-        List<Webpage> webpages =  WebpageManager.fetchWebpagesFromDB(session);
-        webpages.stream().filter(webpage -> list.contains(webpage.getPageId()))
-                .forEach(webpage -> {
-            List<Goal> goals = GoalManager.getAllGoalsFromDBForCounter(session, webpage);
-                    System.out.println(goals.size());
-            goals.forEach(goal -> requester.fetchAllGoals(webpage, goal));
-        });*/
+
+        //Social network filler
+        //SocialNetworkManager snManager = new SocialNetworkManager(sessionManager);
+        //SocialNetworkFiller snFiller = new SocialNetworkFiller(snManager, LocalDate.parse("2021-01-03"), fetcher, jsonParser);
+        //snFiller.fillDatabase();
+
+        //Referral source filler
+        ReferralSourceManager rsManager = new ReferralSourceManager(sessionManager);
+        ReferralSourceFiller rsFiller = new ReferralSourceFiller(rsManager, LocalDate.parse("2021-01-03"), fetcher, jsonParser);
+        rsFiller.fillDatabase();
 
         session.close();
     }

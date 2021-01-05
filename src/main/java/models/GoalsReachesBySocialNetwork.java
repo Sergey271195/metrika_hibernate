@@ -5,10 +5,10 @@ import java.time.LocalDate;
 
 @Entity
 @Table(
-        name = "goalssearchengine",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"goal_id", "engine_id", "date"})}
-        )
-public class GoalsReachesBySearchEngine {
+        name = "goalssocialnetwork",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"goal_id", "network_id", "date"})}
+)
+public class GoalsReachesBySocialNetwork {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,8 +22,8 @@ public class GoalsReachesBySearchEngine {
     private Goal goal;
 
     @ManyToOne
-    @JoinColumn(name = "engine_id")
-    private SearchEngine engine;
+    @JoinColumn(name = "network_id")
+    private SocialNetwork network;
 
     @ManyToOne
     @JoinColumn(name = "webpage_id")
@@ -61,8 +61,12 @@ public class GoalsReachesBySearchEngine {
         this.goal = goal;
     }
 
-    public SearchEngine getEngine() {
-        return engine;
+    public SocialNetwork getNetwork() {
+        return network;
+    }
+
+    public void setNetwork(SocialNetwork network) {
+        this.network = network;
     }
 
     public Webpage getWebpage() {

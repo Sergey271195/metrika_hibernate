@@ -19,7 +19,18 @@
         <mapping class="models.Webpage" />
         <mapping class="models.Goal" />
         <mapping class="models.GoalReachesTrafficSource" />
+
+        <!--Search Engine-->
         <mapping class="models.SearchEngine" />
         <mapping class="models.GoalsReachesBySearchEngine" />
+
+        <!--Social Network-->
+        <mapping class="models.SocialNetwork" />
+        <mapping class="models.GoalsReachesBySocialNetwork" />
+
+        <!--Referral Source-->
+        <mapping class="models.ReferralSource" />
+        <mapping class="models.GoalsReachesByReferralSource" />
+
     </session-factory>
 </hibernate-configuration>

@@ -2,8 +2,7 @@ package Sources.SocialNetwork;
 
 import Interfaces.SessionManager;
 import Sources.Abstract.SourceManager;
-import models.SearchEngine;
-import models.SocialNetwork;
+import models.sources.SocialNetwork;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 

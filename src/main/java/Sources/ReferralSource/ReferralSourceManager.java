@@ -2,7 +2,7 @@ package Sources.ReferralSource;
 
 import Interfaces.SessionManager;
 import Sources.Abstract.SourceManager;
-import models.ReferralSource;
+import models.sources.ReferralSource;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 

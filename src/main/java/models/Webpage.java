@@ -1,5 +1,6 @@
 package models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.ZonedDateTime;
@@ -15,6 +16,9 @@ public class Webpage {
     private String name;
 
     private ZonedDateTime createTime;
+
+    @Column(columnDefinition = "boolean default false")
+    private boolean commercial;
 
     public long getPageId() {
         return pageId;
@@ -46,5 +50,13 @@ public class Webpage {
 
     public void setCreateTime(ZonedDateTime createTime) {
         this.createTime = createTime;
+    }
+
+    public boolean isCommercial() {
+        return commercial;
+    }
+
+    public void setCommercial(boolean commercial) {
+        this.commercial = commercial;
     }
 }

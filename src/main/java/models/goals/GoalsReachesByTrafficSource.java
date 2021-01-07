@@ -1,14 +1,18 @@
-package models;
+package models.goals;
+
+import models.Goal;
+import models.sources.TrafficSource;
+import models.Webpage;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Table(
-        name = "goalssocialnetwork",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"goal_id", "network_id", "date"})}
+        name = "goalstrafficsource",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"goal_id", "source_id", "date"})}
 )
-public class GoalsReachesBySocialNetwork {
+public class GoalsReachesByTrafficSource {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,8 +26,8 @@ public class GoalsReachesBySocialNetwork {
     private Goal goal;
 
     @ManyToOne
-    @JoinColumn(name = "network_id")
-    private SocialNetwork network;
+    @JoinColumn(name = "source_id")
+    private TrafficSource trafficSource;
 
     @ManyToOne
     @JoinColumn(name = "webpage_id")
@@ -61,12 +65,12 @@ public class GoalsReachesBySocialNetwork {
         this.goal = goal;
     }
 
-    public SocialNetwork getNetwork() {
-        return network;
+    public TrafficSource getTrafficSource() {
+        return trafficSource;
     }
 
-    public void setNetwork(SocialNetwork network) {
-        this.network = network;
+    public void setTrafficSource(TrafficSource trafficSource) {
+        this.trafficSource = trafficSource;
     }
 
     public Webpage getWebpage() {

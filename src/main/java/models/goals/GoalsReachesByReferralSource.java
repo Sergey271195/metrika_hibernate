@@ -1,14 +1,18 @@
-package models;
+package models.goals;
+
+import models.Goal;
+import models.sources.ReferralSource;
+import models.Webpage;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Table(
-        name = "goalssearchphrase",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"goal_id", "phrase_id", "date"})}
+        name = "goalsreferral",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"goal_id", "referral_id", "date"})}
 )
-public class GoalsReachesBySearchPhrase {
+public class GoalsReachesByReferralSource {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,8 +26,8 @@ public class GoalsReachesBySearchPhrase {
     private Goal goal;
 
     @ManyToOne
-    @JoinColumn(name = "phrase_id")
-    private SearchPhrase searchPhrase;
+    @JoinColumn(name = "referral_id")
+    private ReferralSource referral;
 
     @ManyToOne
     @JoinColumn(name = "webpage_id")
@@ -61,12 +65,12 @@ public class GoalsReachesBySearchPhrase {
         this.goal = goal;
     }
 
-    public SearchPhrase getSearchPhrase() {
-        return searchPhrase;
+    public ReferralSource getReferal() {
+        return referral;
     }
 
-    public void setSearchPhrase(SearchPhrase searchPhrase) {
-        this.searchPhrase = searchPhrase;
+    public void setReferal(ReferralSource referal) {
+        this.referral = referal;
     }
 
     public Webpage getWebpage() {

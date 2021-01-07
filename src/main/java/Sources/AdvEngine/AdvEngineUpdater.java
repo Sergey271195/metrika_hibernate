@@ -2,10 +2,9 @@ package Sources.AdvEngine;
 
 import Interfaces.Fetcher;
 import Interfaces.JsonParser;
-import Interfaces.SessionManager;
 import Sources.Abstract.DatabaseUpdaterAbs;
 import Sources.Abstract.SourceManager;
-import models.GoalsReachesByAdvEngine;
+import models.goals.GoalsReachesByAdvEngine;
 
 import java.util.List;
 import java.util.Map;

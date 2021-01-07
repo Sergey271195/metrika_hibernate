@@ -1,13 +1,13 @@
 import Interfaces.Fetcher;
 import Interfaces.JsonParser;
-import Interfaces.SessionManager;
 import Sources.AdvEngine.AdvEngineManager;
 import Sources.Factory.SourceManagerFactory;
 import Sources.ReferralSource.ReferralSourceManager;
 import Sources.SearchEngine.SearchEngineManager;
-import Sources.SearchPhrase.SearchPhraseFiller;
 import Sources.SearchPhrase.SearchPhraseManager;
 import Sources.SocialNetwork.SocialNetworkManager;
+import Sources.TrafficSource.TrafficSourceFiller;
+import Sources.TrafficSource.TrafficSourceManager;
 
 import java.time.LocalDate;
 
@@ -24,6 +24,12 @@ public class DatabaseFiller {
     }
 
     public void fillUntilDate(LocalDate date) {
+
+        //Traffic source filler
+
+        TrafficSourceManager tsManager = sourceFactory.getTrafficSourceManager();
+        //TrafficSourceFiller tsFiller = new TrafficSourceFiller(tsManager, date, fetcher, jsonParser);
+        //tsFiller.fillDatabase();
 
         //Search engine filler
 

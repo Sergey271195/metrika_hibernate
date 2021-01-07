@@ -1,22 +1,22 @@
-package models;
+package models.sources;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "test")
-public class Test {
+@Table(name = "referralsource")
+public class ReferralSource {
 
     @Id
-    private int id;
+    private String id;
     private String name;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -33,7 +33,7 @@ public class FetcherImp implements Fetcher {
             );
         } catch (java.net.URISyntaxException|java.io.IOException|java.lang.InterruptedException e) {
             System.out.println(e);
-            return "{}";
+            return "{\"error\": \"error\"}";
         }
     }
 }

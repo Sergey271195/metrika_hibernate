@@ -2,7 +2,7 @@ package Sources.SearchEngine;
 
 import Interfaces.SessionManager;
 import Sources.Abstract.SourceManager;
-import models.SearchEngine;
+import models.sources.SearchEngine;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 

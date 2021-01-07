@@ -2,7 +2,7 @@ package Sources.SearchPhrase;
 
 import Interfaces.SessionManager;
 import Sources.Abstract.SourceManager;
-import models.SearchPhrase;
+import models.sources.SearchPhrase;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 

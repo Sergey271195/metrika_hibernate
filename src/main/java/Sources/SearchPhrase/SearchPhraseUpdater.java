@@ -2,10 +2,9 @@ package Sources.SearchPhrase;
 
 import Interfaces.Fetcher;
 import Interfaces.JsonParser;
-import Interfaces.SessionManager;
 import Sources.Abstract.DatabaseUpdaterAbs;
 import Sources.Abstract.SourceManager;
-import models.GoalsReachesBySearchPhrase;
+import models.goals.GoalsReachesBySearchPhrase;
 
 import java.util.List;
 import java.util.Map;

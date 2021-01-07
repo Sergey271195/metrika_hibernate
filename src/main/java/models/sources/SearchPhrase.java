@@ -1,12 +1,12 @@
-package models;
+package models.sources;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "socialnetwork")
-public class SocialNetwork {
+@Table(name = "searchphrase")
+public class SearchPhrase {
 
     @Id
     private String id;

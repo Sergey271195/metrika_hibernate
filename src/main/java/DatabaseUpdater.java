@@ -1,7 +1,5 @@
 import Interfaces.Fetcher;
 import Interfaces.JsonParser;
-import Interfaces.SessionManager;
-import Sources.Abstract.DatabaseUpdaterAbs;
 import Sources.AdvEngine.AdvEngineManager;
 import Sources.AdvEngine.AdvEngineUpdater;
 import Sources.Factory.SourceManagerFactory;
@@ -13,6 +11,8 @@ import Sources.SearchPhrase.SearchPhraseManager;
 import Sources.SearchPhrase.SearchPhraseUpdater;
 import Sources.SocialNetwork.SocialNetworkManager;
 import Sources.SocialNetwork.SocialNetworkUpdater;
+import Sources.TrafficSource.TrafficSourceManager;
+import Sources.TrafficSource.TrafficSourceUpdater;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
@@ -31,6 +31,11 @@ public class DatabaseUpdater {
     }
 
     public void updateDatabase() {
+
+        //Traffic source update
+        TrafficSourceManager tsManager = sourceFactory.getTrafficSourceManager();
+        TrafficSourceUpdater tsUpdater = new TrafficSourceUpdater(tsManager, fetcher, jsonParser);
+        tsUpdater.updateDatabase();
 
         //Search engine update
         SearchEngineManager seManager = sourceFactory.getSearchEngineManager();

@@ -1,12 +1,12 @@
-package models;
+package models.sources;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "referralsource")
-public class ReferralSource {
+@Table(name = "trafficsource")
+public class TrafficSource {
 
     @Id
     private String id;

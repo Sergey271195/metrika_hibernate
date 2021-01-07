@@ -2,7 +2,7 @@ package Sources.AdvEngine;
 
 import Interfaces.SessionManager;
 import Sources.Abstract.SourceManager;
-import models.AdvEngine;
+import models.sources.AdvEngine;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 

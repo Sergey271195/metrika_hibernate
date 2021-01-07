@@ -13,6 +13,10 @@ import java.util.stream.Collectors;
 public class MetrikaUtils {
 
     public static String JANDEX_STAT_BY_TIME = "https://api-metrika.yandex.net/stat/v1/data/bytime?ids=";
+    public static String GOAL_BASE_URI = "https://api-metrika.yandex.net/management/v1/counter/";
+    public static String COUNTERS_URI = "https://api-metrika.yandex.net/management/v1/counters";
+    public static String JANDEX_STAT = "https://api-metrika.yandex.net/stat/v1/data?";
+    public static String JANDEX_STAT_COMPARE = "https://api-metrika.yandex.net/stat/v1/data/comparison?";
 
     public static List<List<Goal>> splitGoals(List<Goal> goals) {
 

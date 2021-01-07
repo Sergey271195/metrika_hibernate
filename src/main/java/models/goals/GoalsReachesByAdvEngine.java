@@ -1,14 +1,18 @@
-package models;
+package models.goals;
+
+import models.sources.AdvEngine;
+import models.Goal;
+import models.Webpage;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Table(
-        name = "goalssearchengine",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"goal_id", "engine_id", "date"})}
-        )
-public class GoalsReachesBySearchEngine {
+        name = "goalsadvengine",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"goal_id", "adv_id", "date"})}
+)
+public class GoalsReachesByAdvEngine {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,8 +26,8 @@ public class GoalsReachesBySearchEngine {
     private Goal goal;
 
     @ManyToOne
-    @JoinColumn(name = "engine_id")
-    private SearchEngine engine;
+    @JoinColumn(name = "adv_id")
+    private AdvEngine advEngine;
 
     @ManyToOne
     @JoinColumn(name = "webpage_id")
@@ -61,8 +65,12 @@ public class GoalsReachesBySearchEngine {
         this.goal = goal;
     }
 
-    public SearchEngine getEngine() {
-        return engine;
+    public AdvEngine getAdvEngine() {
+        return advEngine;
+    }
+
+    public void setAdvEngine(AdvEngine advEngine) {
+        this.advEngine = advEngine;
     }
 
     public Webpage getWebpage() {

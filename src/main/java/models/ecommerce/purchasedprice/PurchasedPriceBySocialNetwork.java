@@ -1,19 +1,17 @@
-package models.views;
+package models.ecommerce.purchasedprice;
 
-import models.Goal;
 import models.Webpage;
-import models.sources.ReferralSource;
+import models.sources.SocialNetwork;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
-
 @Entity
 @Table(
-        name = "viewsreferral",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"webpage_id", "referral_id", "date"})}
+        name = "pricesocialnetwork",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"webpage_id", "network_id", "date"})}
 )
-public class ViewsByReferralSource {
+public class PurchasedPriceBySocialNetwork {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,8 +21,8 @@ public class ViewsByReferralSource {
     private double reaches;
 
     @ManyToOne
-    @JoinColumn(name = "referral_id")
-    private ReferralSource referral;
+    @JoinColumn(name = "network_id")
+    private SocialNetwork network;
 
     @ManyToOne
     @JoinColumn(name = "webpage_id")
@@ -54,12 +52,12 @@ public class ViewsByReferralSource {
         this.reaches = reaches;
     }
 
-    public ReferralSource getReferal() {
-        return referral;
+    public SocialNetwork getNetwork() {
+        return network;
     }
 
-    public void setReferal(ReferralSource referal) {
-        this.referral = referal;
+    public void setNetwork(SocialNetwork network) {
+        this.network = network;
     }
 
     public Webpage getWebpage() {

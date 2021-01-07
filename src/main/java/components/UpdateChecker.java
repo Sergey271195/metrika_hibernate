@@ -7,7 +7,6 @@ import models.Webpage;
 import org.hibernate.Session;
 import org.hibernate.type.LongType;
 
-import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;

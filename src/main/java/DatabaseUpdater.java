@@ -1,22 +1,24 @@
 import Interfaces.Fetcher;
 import Interfaces.JsonParser;
 import Sources.AdvEngine.AdvEngineManager;
-import Sources.AdvEngine.AdvEngineUpdater;
+import Sources.AdvEngine.AdvEngineGoalsUpdater;
+import Sources.AdvEngine.AdvEngineViewsUpdater;
 import Sources.Factory.SourceManagerFactory;
 import Sources.ReferralSource.ReferralSourceManager;
-import Sources.ReferralSource.ReferralSourceUpdater;
+import Sources.ReferralSource.ReferralSourceGoalsUpdater;
+import Sources.ReferralSource.ReferralSourceViewsUpdater;
 import Sources.SearchEngine.SearchEngineManager;
-import Sources.SearchEngine.SearchEngineUpdater;
+import Sources.SearchEngine.SearchEngineGoalsUpdater;
+import Sources.SearchEngine.SearchEngineViewsUpdater;
 import Sources.SearchPhrase.SearchPhraseManager;
-import Sources.SearchPhrase.SearchPhraseUpdater;
+import Sources.SearchPhrase.SearchPhraseGoalsUpdater;
+import Sources.SearchPhrase.SearchPhraseViewsUpdater;
 import Sources.SocialNetwork.SocialNetworkManager;
-import Sources.SocialNetwork.SocialNetworkUpdater;
+import Sources.SocialNetwork.SocialNetworkGoalsUpdater;
+import Sources.SocialNetwork.SocialNetworkViewsUpdater;
 import Sources.TrafficSource.TrafficSourceManager;
-import Sources.TrafficSource.TrafficSourceUpdater;
-
-import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.List;
+import Sources.TrafficSource.TrafficSourceGoalsUpdater;
+import Sources.TrafficSource.TrafficSourceViewsUpdater;
 
 public class DatabaseUpdater {
 
@@ -32,35 +34,60 @@ public class DatabaseUpdater {
 
     public void updateDatabase() {
 
+
         //Traffic source update
         TrafficSourceManager tsManager = sourceFactory.getTrafficSourceManager();
-        TrafficSourceUpdater tsUpdater = new TrafficSourceUpdater(tsManager, fetcher, jsonParser);
+
+        TrafficSourceGoalsUpdater tsUpdater = new TrafficSourceGoalsUpdater(tsManager, fetcher, jsonParser);
         tsUpdater.updateDatabase();
+
+        TrafficSourceViewsUpdater tsvUpdater = new TrafficSourceViewsUpdater(tsManager, fetcher, jsonParser);
+        tsvUpdater.updateDatabase();
 
         //Search engine update
         SearchEngineManager seManager = sourceFactory.getSearchEngineManager();
-        SearchEngineUpdater seUpdater = new SearchEngineUpdater(seManager, fetcher, jsonParser);
+
+        SearchEngineGoalsUpdater seUpdater = new SearchEngineGoalsUpdater(seManager, fetcher, jsonParser);
         seUpdater.updateDatabase();
+
+        SearchEngineViewsUpdater sevUpdater = new SearchEngineViewsUpdater(seManager, fetcher, jsonParser);
+        sevUpdater.updateDatabase();
 
         //Social network update
         SocialNetworkManager snManager = sourceFactory.getSocialNetworkManager();
-        SocialNetworkUpdater snUpdater = new SocialNetworkUpdater(snManager, fetcher, jsonParser);
+
+        SocialNetworkGoalsUpdater snUpdater = new SocialNetworkGoalsUpdater(snManager, fetcher, jsonParser);
         snUpdater.updateDatabase();
+
+        SocialNetworkViewsUpdater snvUpdater = new SocialNetworkViewsUpdater(snManager, fetcher, jsonParser);
+        snvUpdater.updateDatabase();
 
         //Referral source update
         ReferralSourceManager rsManager = sourceFactory.getReferralSourceManager();
-        ReferralSourceUpdater rsUpdater = new ReferralSourceUpdater(rsManager, fetcher, jsonParser);
+
+        ReferralSourceGoalsUpdater rsUpdater = new ReferralSourceGoalsUpdater(rsManager, fetcher, jsonParser);
         rsUpdater.updateDatabase();
+
+        ReferralSourceViewsUpdater rsvUpdater = new ReferralSourceViewsUpdater(rsManager, fetcher, jsonParser);
+        rsvUpdater.updateDatabase();
 
         //AdvEngine update
         AdvEngineManager aeManager = sourceFactory.getAdvEngineManager();
-        AdvEngineUpdater aeUpdater = new AdvEngineUpdater(aeManager, fetcher, jsonParser);
+
+        AdvEngineGoalsUpdater aeUpdater = new AdvEngineGoalsUpdater(aeManager, fetcher, jsonParser);
         aeUpdater.updateDatabase();
+
+        AdvEngineViewsUpdater aevUpdater = new AdvEngineViewsUpdater(aeManager, fetcher, jsonParser);
+        aevUpdater.updateDatabase();
 
         //Search Phrase update
         SearchPhraseManager spManager = sourceFactory.getSearchPhraseManager();
-        SearchPhraseUpdater spUpdater = new SearchPhraseUpdater(spManager, fetcher, jsonParser);
+
+        SearchPhraseGoalsUpdater spUpdater = new SearchPhraseGoalsUpdater(spManager, fetcher, jsonParser);
         spUpdater.updateDatabase();
+
+        SearchPhraseViewsUpdater spvUpdater = new SearchPhraseViewsUpdater(spManager, fetcher, jsonParser);
+        spvUpdater.updateDatabase();
     }
 
 }

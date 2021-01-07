@@ -3,7 +3,7 @@ package Sources.TrafficSource;
 
 import Interfaces.Fetcher;
 import Interfaces.JsonParser;
-import Sources.Abstract.DatabaseUpdaterAbs;
+import Sources.Abstract.DatabaseGoalsUpdaterAbs;
 import Sources.Abstract.SourceManager;
 import models.goals.GoalsReachesByTrafficSource;
 
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class TrafficSourceUpdater extends DatabaseUpdaterAbs {
+public class TrafficSourceGoalsUpdater extends DatabaseGoalsUpdaterAbs {
 
     private SourceManager sourceManager;
     private static String dimensions = "ym:s:lastsignTrafficSource";
@@ -19,7 +19,7 @@ public class TrafficSourceUpdater extends DatabaseUpdaterAbs {
     private static String insertQuery =
             "INSERT INTO goalstrafficsource (id, webpage_id, date, goal_id, source_id, reaches)\nVALUES\n\t";
 
-    public TrafficSourceUpdater(SourceManager sourceManager, Fetcher fetcher, JsonParser parser) {
+    public TrafficSourceGoalsUpdater(SourceManager sourceManager, Fetcher fetcher, JsonParser parser) {
         super(GoalsReachesByTrafficSource.class, dimensions, fetcher, parser);
         this.sourceManager = sourceManager;
     }

@@ -1,19 +1,17 @@
-package models.views;
+package models.ecommerce.purchases;
 
-import models.Goal;
 import models.Webpage;
 import models.sources.ReferralSource;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
-
 @Entity
 @Table(
-        name = "viewsreferral",
+        name = "purchasesreferral",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"webpage_id", "referral_id", "date"})}
 )
-public class ViewsByReferralSource {
+public class PurchasesByReferralSource {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

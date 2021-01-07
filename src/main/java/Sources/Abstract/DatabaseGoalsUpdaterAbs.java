@@ -19,18 +19,17 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public abstract class DatabaseUpdaterAbs {
+public abstract class DatabaseGoalsUpdaterAbs {
 
     private final Class tableClass;
     private final Fetcher fetcher;
     private final JsonParser parser;
     private final String dimensions;
     private UpdateChecker checker;
-    private static String JANDEX_STAT_BY_TIME = "https://api-metrika.yandex.net/stat/v1/data/bytime?ids=";
 
     protected static LocalDate yesterday = UpdateChecker.yesterday;
 
-    public DatabaseUpdaterAbs(
+    public DatabaseGoalsUpdaterAbs(
             Class tableClass, String dimensions, Fetcher fetcher, JsonParser parser
     ) {
         this.tableClass = tableClass;
@@ -81,7 +80,7 @@ public abstract class DatabaseUpdaterAbs {
                 .collect(Collectors.joining(","));
 
         StringBuilder request = new StringBuilder();
-        request.append(JANDEX_STAT_BY_TIME).append(webpageId)
+        request.append(MetrikaUtils.JANDEX_STAT_BY_TIME).append(webpageId)
                 .append("&group=day&metrics=").append(goalsMetrik)
                 .append("&dimensions=").append(dimensions)
                 .append("&date1=").append(yesterday)

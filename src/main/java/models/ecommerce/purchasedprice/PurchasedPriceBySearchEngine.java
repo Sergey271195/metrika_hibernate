@@ -1,19 +1,16 @@
-package models.views;
+package models.ecommerce.purchasedprice;
 
 import models.Goal;
 import models.Webpage;
-import models.sources.ReferralSource;
+import models.sources.SearchEngine;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 
 @Entity
-@Table(
-        name = "viewsreferral",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"webpage_id", "referral_id", "date"})}
-)
-public class ViewsByReferralSource {
+@Table(name = "pricesearchengine")
+public class PurchasedPriceBySearchEngine {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,8 +20,8 @@ public class ViewsByReferralSource {
     private double reaches;
 
     @ManyToOne
-    @JoinColumn(name = "referral_id")
-    private ReferralSource referral;
+    @JoinColumn(name = "engine_id")
+    private SearchEngine engine;
 
     @ManyToOne
     @JoinColumn(name = "webpage_id")
@@ -54,19 +51,11 @@ public class ViewsByReferralSource {
         this.reaches = reaches;
     }
 
-    public ReferralSource getReferal() {
-        return referral;
+    public SearchEngine getEngine() {
+        return engine;
     }
 
-    public void setReferal(ReferralSource referal) {
-        this.referral = referal;
-    }
-
-    public Webpage getWebpage() {
-        return webpage;
-    }
-
-    public void setWebpage(Webpage webpage) {
-        this.webpage = webpage;
+    public void setEngine(SearchEngine engine) {
+        this.engine = engine;
     }
 }

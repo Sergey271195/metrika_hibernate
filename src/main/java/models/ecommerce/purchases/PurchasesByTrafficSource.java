@@ -1,19 +1,18 @@
-package models.views;
+package models.ecommerce.purchases;
 
-import models.Goal;
+
 import models.Webpage;
-import models.sources.ReferralSource;
+import models.sources.TrafficSource;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
-
 @Entity
 @Table(
-        name = "viewsreferral",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"webpage_id", "referral_id", "date"})}
+        name = "purchasestrafficsource",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"webpage_id", "source_id", "date"})}
 )
-public class ViewsByReferralSource {
+public class PurchasesByTrafficSource {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,8 +22,8 @@ public class ViewsByReferralSource {
     private double reaches;
 
     @ManyToOne
-    @JoinColumn(name = "referral_id")
-    private ReferralSource referral;
+    @JoinColumn(name = "source_id")
+    private TrafficSource trafficSource;
 
     @ManyToOne
     @JoinColumn(name = "webpage_id")
@@ -54,12 +53,12 @@ public class ViewsByReferralSource {
         this.reaches = reaches;
     }
 
-    public ReferralSource getReferal() {
-        return referral;
+    public TrafficSource getTrafficSource() {
+        return trafficSource;
     }
 
-    public void setReferal(ReferralSource referal) {
-        this.referral = referal;
+    public void setTrafficSource(TrafficSource trafficSource) {
+        this.trafficSource = trafficSource;
     }
 
     public Webpage getWebpage() {

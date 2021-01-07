@@ -1,25 +1,25 @@
-package Sources.ReferralSource;
+package Sources.SearchPhrase;
 
 import Interfaces.Fetcher;
 import Interfaces.JsonParser;
-import Sources.Abstract.DatabaseUpdaterAbs;
+import Sources.Abstract.DatabaseGoalsUpdaterAbs;
 import Sources.Abstract.SourceManager;
-import models.goals.GoalsReachesByReferralSource;
+import models.goals.GoalsReachesBySearchPhrase;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ReferralSourceUpdater extends DatabaseUpdaterAbs {
+public class SearchPhraseGoalsUpdater extends DatabaseGoalsUpdaterAbs {
 
     private SourceManager sourceManager;
-    private static String dimensions = "ym:s:lastsignReferalSource";
+    private static String dimensions = "ym:s:lastsignSearchPhrase";
 
     private static String insertQuery =
-            "INSERT INTO goalsreferral (id, webpage_id, date, goal_id, referral_id, reaches)\nVALUES\n\t";
+            "INSERT INTO goalssearchphrase (id, webpage_id, date, goal_id, phrase_id, reaches)\nVALUES\n\t";
 
-    public ReferralSourceUpdater(SourceManager sourceManager, Fetcher fetcher, JsonParser parser) {
-        super(GoalsReachesByReferralSource.class, dimensions, fetcher, parser);
+    public SearchPhraseGoalsUpdater(SourceManager sourceManager, Fetcher fetcher, JsonParser parser) {
+        super(GoalsReachesBySearchPhrase.class, dimensions, fetcher, parser);
         this.sourceManager = sourceManager;
     }
 
@@ -50,5 +50,4 @@ public class ReferralSourceUpdater extends DatabaseUpdaterAbs {
         String values =  "(nextval('hibernate_sequence'), " + webpageId + ", '" + yesterday + "', " + goals.get(0) + ", '-', 0)";
         return insertQuery + values + ";";
     }
-
 }

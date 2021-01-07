@@ -22,26 +22,6 @@ public class GoalManager implements WrappableWithArg<List<Goal>, Webpage> {
         return newGoal;
     }
 
-    public static GoalReachesTrafficSource createGoalReachesWithTrafficSource(
-            Goal goal, Webpage webpage, Double ad, LocalDate date,
-            Double direct, Double internal, Double organic,
-            Double recommend, Double referral, Double social, Double total
-    ) {
-        GoalReachesTrafficSource newGoal = new GoalReachesTrafficSource();
-        newGoal.setGoal(goal);
-        newGoal.setDate(date);
-        newGoal.setAd(ad);
-        newGoal.setDirect(direct);
-        newGoal.setInternal(internal);
-        newGoal.setOrganic(organic);
-        newGoal.setRecommend(recommend);
-        newGoal.setReferral(referral);
-        newGoal.setSocial(social);
-        newGoal.setTotal(total);
-        newGoal.setWebpage(webpage);
-        return newGoal;
-    }
-
     public static List<Goal> getAllGoalsFromDB(Session session) {
         Transaction tx = session.beginTransaction();
         List<Goal> goals = session

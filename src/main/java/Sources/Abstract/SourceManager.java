@@ -3,9 +3,8 @@ import Interfaces.SessionManager;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.Array;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -37,9 +36,9 @@ public abstract class SourceManager<T> {
         return sourceList;
     }
 
-    public List<String> mapGoalsToSource(List<Map<String, List>> metrics, List<Long> goals) {
+    public List<String> mapGoalsToSource(List<Map<String, List>> data, List<Long> goals) {
         List<String> insertValues = new ArrayList<>();
-        Map<String, List> sourceList = groupMetricsByDimensions(metrics);
+        Map<String, List> sourceList = groupMetricsByDimensions(data);
         for (String source: sourceList.keySet()) {
             List<String> intermediateValues = IntStream.range(0, goals.size())
                     .mapToObj(i -> goals.get(i) + ", '" + source + "', " + sourceList.get(source).get(i))
@@ -47,6 +46,25 @@ public abstract class SourceManager<T> {
             insertValues.addAll(intermediateValues);
         }
         return insertValues;
+    }
+
+    public Map<String, List<String>> mapMetricsToSource(List<Map<String, List>> data, List<String> metrics) {
+        Map<String, List<String>> mappedData = new HashMap<>();
+        for (Map<String, List> dataEntry: data) {
+            createNewSourceInstance(dataEntry);
+            String dimensionId = getDimensionId(dataEntry);
+            for (int i = 0; i < metrics.size(); i++) {
+                Double reaches = (Double) ((List) dataEntry.get("metrics").get(i)).get(0);
+                if (mappedData.get(metrics.get(i)) != null) {
+                    mappedData.get(metrics.get(i)).add("'" + dimensionId + "'" + ", " + reaches);
+                } else {
+                    List<String> newList = new ArrayList<>();
+                    newList.add("'" + dimensionId + "'" + ", " + reaches);
+                    mappedData.put(metrics.get(i), newList);
+                }
+            }
+        }
+        return mappedData;
     }
 
     private static String getDimensionId(Map<String, List> responseData) {

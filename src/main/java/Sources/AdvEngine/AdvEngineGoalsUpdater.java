@@ -2,7 +2,7 @@ package Sources.AdvEngine;
 
 import Interfaces.Fetcher;
 import Interfaces.JsonParser;
-import Sources.Abstract.DatabaseUpdaterAbs;
+import Sources.Abstract.DatabaseGoalsUpdaterAbs;
 import Sources.Abstract.SourceManager;
 import models.goals.GoalsReachesByAdvEngine;
 
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class AdvEngineUpdater extends DatabaseUpdaterAbs {
+public class AdvEngineGoalsUpdater extends DatabaseGoalsUpdaterAbs {
 
     private SourceManager sourceManager;
     private static String dimensions = "ym:s:lastsignAdvEngine";
@@ -18,7 +18,7 @@ public class AdvEngineUpdater extends DatabaseUpdaterAbs {
     private static String insertQuery =
             "INSERT INTO goalsadvengine (id, webpage_id, date, goal_id, adv_id, reaches)\nVALUES\n\t";
 
-    public AdvEngineUpdater(SourceManager sourceManager, Fetcher fetcher, JsonParser parser) {
+    public AdvEngineGoalsUpdater(SourceManager sourceManager, Fetcher fetcher, JsonParser parser) {
         super(GoalsReachesByAdvEngine.class, dimensions, fetcher, parser);
         this.sourceManager = sourceManager;
     }

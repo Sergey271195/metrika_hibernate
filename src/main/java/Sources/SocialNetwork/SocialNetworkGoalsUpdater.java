@@ -1,25 +1,25 @@
-package Sources.SearchPhrase;
+package Sources.SocialNetwork;
 
 import Interfaces.Fetcher;
 import Interfaces.JsonParser;
-import Sources.Abstract.DatabaseUpdaterAbs;
+import Sources.Abstract.DatabaseGoalsUpdaterAbs;
 import Sources.Abstract.SourceManager;
-import models.goals.GoalsReachesBySearchPhrase;
+import models.goals.GoalsReachesBySocialNetwork;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class SearchPhraseUpdater extends DatabaseUpdaterAbs {
+public class SocialNetworkGoalsUpdater extends DatabaseGoalsUpdaterAbs {
 
     private SourceManager sourceManager;
-    private static String dimensions = "ym:s:lastsignSearchPhrase";
+    private static String dimensions = "ym:s:lastsignSocialNetwork";
 
     private static String insertQuery =
-            "INSERT INTO goalssearchphrase (id, webpage_id, date, goal_id, phrase_id, reaches)\nVALUES\n\t";
+            "INSERT INTO goalssocialnetwork (id, webpage_id, date, goal_id, network_id, reaches)\nVALUES\n\t";
 
-    public SearchPhraseUpdater(SourceManager sourceManager, Fetcher fetcher, JsonParser parser) {
-        super(GoalsReachesBySearchPhrase.class, dimensions, fetcher, parser);
+    public SocialNetworkGoalsUpdater(SourceManager sourceManager, Fetcher fetcher, JsonParser parser) {
+        super(GoalsReachesBySocialNetwork.class, dimensions, fetcher, parser);
         this.sourceManager = sourceManager;
     }
 
@@ -47,7 +47,7 @@ public class SearchPhraseUpdater extends DatabaseUpdaterAbs {
     }
 
     private String createEmptyInsertQuery(List<Long> goals, Long webpageId) {
-        String values =  "(nextval('hibernate_sequence'), " + webpageId + ", '" + yesterday + "', " + goals.get(0) + ", '-', 0)";
+        String values =  "(nextval('hibernate_sequence'), " + webpageId + ", '" + yesterday + "', " + goals.get(0) + ", 'vkontakte', 0)";
         return insertQuery + values + ";";
     }
 }

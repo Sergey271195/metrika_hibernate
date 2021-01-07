@@ -22,27 +22,45 @@
         <!--Search Engine-->
         <mapping class="models.sources.SearchEngine" />
         <mapping class="models.goals.GoalsReachesBySearchEngine" />
+        <mapping class="models.views.ViewsBySearchEngine" />
+        <mapping class="models.ecommerce.purchases.PurchasesBySearchEngine" />
+        <mapping class="models.ecommerce.purchasedprice.PurchasedPriceBySearchEngine" />
 
         <!--Social Network-->
         <mapping class="models.sources.SocialNetwork" />
         <mapping class="models.goals.GoalsReachesBySocialNetwork" />
+        <mapping class="models.views.ViewsBySocialNetwork" />
+        <mapping class="models.ecommerce.purchases.PurchasesBySocialNetwork" />
+        <mapping class="models.ecommerce.purchasedprice.PurchasedPriceBySocialNetwork" />
 
 
         <!--Referral Source-->
         <mapping class="models.sources.ReferralSource" />
         <mapping class="models.goals.GoalsReachesByReferralSource" />
+        <mapping class="models.views.ViewsByReferralSource" />
+        <mapping class="models.ecommerce.purchases.PurchasesByReferralSource" />
+        <mapping class="models.ecommerce.purchasedprice.PurchasedPriceByReferralSource" />
 
         <!--Adv Engine-->
         <mapping class="models.sources.AdvEngine" />
         <mapping class="models.goals.GoalsReachesByAdvEngine" />
+        <mapping class="models.views.ViewsByAdvEngine" />
+        <mapping class="models.ecommerce.purchases.PurchasesByAdvEngine" />
+        <mapping class="models.ecommerce.purchasedprice.PurchasedPriceByAdvEngine" />
 
         <!--Search Phrase-->
         <mapping class="models.sources.SearchPhrase" />
         <mapping class="models.goals.GoalsReachesBySearchPhrase" />
+        <mapping class="models.views.ViewsBySearchPhrase" />
+        <mapping class="models.ecommerce.purchases.PurchasesBySearchPhrase" />
+        <mapping class="models.ecommerce.purchasedprice.PurchasedPriceBySearchPhrase" />
 
         <!--Traffic Source-->
         <mapping class="models.sources.TrafficSource" />
         <mapping class="models.goals.GoalsReachesByTrafficSource" />
+        <mapping class="models.views.ViewsByTrafficSource" />
+        <mapping class="models.ecommerce.purchases.PurchasesByTrafficSource" />
+        <mapping class="models.ecommerce.purchasedprice.PurchasedPriceByTrafficSource" />
 
     </session-factory>
 </hibernate-configuration>

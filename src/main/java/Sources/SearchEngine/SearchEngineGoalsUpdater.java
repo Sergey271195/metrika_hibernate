@@ -1,6 +1,6 @@
 package Sources.SearchEngine;
 
-import Sources.Abstract.DatabaseUpdaterAbs;
+import Sources.Abstract.DatabaseGoalsUpdaterAbs;
 import Interfaces.Fetcher;
 import Interfaces.JsonParser;
 import Sources.Abstract.SourceManager;
@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 
-public class SearchEngineUpdater extends DatabaseUpdaterAbs {
+public class SearchEngineGoalsUpdater extends DatabaseGoalsUpdaterAbs {
 
     private SourceManager sourceManager;
     private static String dimensions = "ym:s:lastsignSearchEngineRoot";
@@ -18,7 +18,7 @@ public class SearchEngineUpdater extends DatabaseUpdaterAbs {
     private static String insertQuery =
             "INSERT INTO goalssearchengine (id, webpage_id, date, goal_id, engine_id, reaches)\nVALUES\n\t";
 
-    public SearchEngineUpdater(SourceManager sourceManager, Fetcher fetcher, JsonParser parser) {
+    public SearchEngineGoalsUpdater(SourceManager sourceManager, Fetcher fetcher, JsonParser parser) {
         super(GoalsReachesBySearchEngine.class, dimensions, fetcher, parser);
         this.sourceManager = sourceManager;
     }

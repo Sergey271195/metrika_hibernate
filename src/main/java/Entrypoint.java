@@ -24,13 +24,11 @@ public class Entrypoint {
         SourceManagerFactory sourceFactory = new SourceManagerFactory(sessionManager);
 
         DatabaseUpdater dbUpdater = new DatabaseUpdater(fetcher, jsonParser, sourceFactory);
-        //dbUpdater.updateDatabase();
+        dbUpdater.updateDatabase();
 
         DatabaseFiller dbFiller = new DatabaseFiller(fetcher, jsonParser, sourceFactory);
         dbFiller.fillUntilDate(LocalDate.parse("2021-01-05"));
 
-        List<Long> ids = WebpageManager.getCommercialWebpagesIds(sessionManager);
-        System.out.println(ids);
     }
 
 }

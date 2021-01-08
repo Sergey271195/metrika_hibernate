@@ -2,7 +2,7 @@ package Sources.ReferralSource;
 
 import Interfaces.Fetcher;
 import Interfaces.JsonParser;
-import Sources.Abstract.DatabaseFiller;
+import Sources.Abstract.DatabaseGoalsFiller;
 import Sources.Abstract.SourceManager;
 import components.MetrikaUtils;
 
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ReferralSourceFiller extends DatabaseFiller {
+public class ReferralSourceGoalsFiller extends DatabaseGoalsFiller {
 
     private SourceManager sourceManager;
     private static String dimensions = "ym:s:lastsignReferalSource";
@@ -20,8 +20,8 @@ public class ReferralSourceFiller extends DatabaseFiller {
     private static String insertQuery =
             "INSERT INTO goalsreferral (id, webpage_id, goal_id, date, referral_id, reaches)\nVALUES\n\t";
 
-    public ReferralSourceFiller(SourceManager sourceManager, LocalDate endDate,
-                              Fetcher fetcher, JsonParser parser)
+    public ReferralSourceGoalsFiller(SourceManager sourceManager, LocalDate endDate,
+                                     Fetcher fetcher, JsonParser parser)
     {
         super(dimensions, endDate, parser, fetcher);
         this.sourceManager = sourceManager;

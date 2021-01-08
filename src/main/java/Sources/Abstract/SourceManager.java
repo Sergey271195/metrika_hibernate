@@ -56,11 +56,30 @@ public abstract class SourceManager<T> {
             for (int i = 0; i < metrics.size(); i++) {
                 Double reaches = (Double) ((List) dataEntry.get("metrics").get(i)).get(0);
                 if (mappedData.get(metrics.get(i)) != null) {
-                    mappedData.get(metrics.get(i)).add("'" + dimensionId + "'" + ", " + reaches);
+                    mappedData.get(metrics.get(i)).add("'" + dimensionId.replace("'", "''") + "'" + ", " + reaches);
                 } else {
                     List<String> newList = new ArrayList<>();
                     newList.add("'" + dimensionId + "'" + ", " + reaches);
                     mappedData.put(metrics.get(i), newList);
+                }
+            }
+        }
+        return mappedData;
+    }
+
+    public Map<String, Map<String, List>> mapMetricsToSourceHistory(List<Map<String, List>> data, List<String> metrics) {
+        Map<String, Map<String, List>> mappedData = new HashMap<>();
+        for (Map<String, List> dataEntry: data) {
+            createNewSourceInstance(dataEntry);
+            String dimensionId = getDimensionId(dataEntry);
+            for (int i = 0; i < metrics.size(); i++) {
+                List<Double> reaches = (List<Double>) dataEntry.get("metrics").get(i);
+                if (mappedData.get(metrics.get(i)) != null) {
+                    mappedData.get(metrics.get(i)).put(dimensionId, reaches);
+                } else {
+                    Map<String, List> innerMappedData = new HashMap<>();
+                    innerMappedData.put(dimensionId, reaches);
+                    mappedData.put(metrics.get(i), innerMappedData);
                 }
             }
         }

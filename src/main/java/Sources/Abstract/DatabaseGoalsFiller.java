@@ -16,14 +16,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public abstract class DatabaseFiller {
+public abstract class DatabaseGoalsFiller {
 
     private final String dimensions;
     private final LocalDate endDate;
     private final Fetcher fetcher;
     private final JsonParser parser;
 
-    public DatabaseFiller(String dimensions, LocalDate endDate, JsonParser parser, Fetcher fetcher) {
+    public DatabaseGoalsFiller(String dimensions, LocalDate endDate, JsonParser parser, Fetcher fetcher) {
         this.dimensions = dimensions;
         this.endDate = endDate;
         this.parser = parser;

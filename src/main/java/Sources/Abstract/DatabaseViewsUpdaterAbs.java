@@ -6,6 +6,7 @@ import components.MetrikaUtils;
 import components.SessionWrapper;
 import components.UpdateChecker;
 import components.UpdateQueryExecutor;
+import managers.WebpageManager;
 import models.Webpage;
 
 import java.time.LocalDate;
@@ -20,6 +21,9 @@ public abstract class DatabaseViewsUpdaterAbs {
     private final JsonParser parser;
     private final String dimensions;
     private UpdateChecker checker;
+
+    private static String commercialMetrics = "&group=day&metrics=ym:s:visits,ym:s:ecommercePurchases,ym:s:productPurchasedPrice";
+    private static String nonCommercialMetrics = "&group=day&metrics=ym:s:visits";
 
     protected static LocalDate yesterday = UpdateChecker.yesterday;
 
@@ -59,9 +63,8 @@ public abstract class DatabaseViewsUpdaterAbs {
 
         StringBuilder request = new StringBuilder();
         request.append(MetrikaUtils.JANDEX_STAT_BY_TIME).append(webpage.getPageId())
-                .append("&group=day&metrics=ym:s:visits")
+                .append(nonCommercialMetrics)
                 .append(requestEndingLine());
-
         return request.toString();
     }
 
@@ -69,9 +72,8 @@ public abstract class DatabaseViewsUpdaterAbs {
 
         StringBuilder request = new StringBuilder();
         request.append(MetrikaUtils.JANDEX_STAT_BY_TIME).append(webpage.getPageId())
-                .append("&group=day&metrics=ym:s:visits,ym:s:ecommercePurchases,ym:s:productPurchasedPrice")
+                .append(commercialMetrics)
                 .append(requestEndingLine());
-
         return request.toString();
     }
 
@@ -100,4 +102,5 @@ public abstract class DatabaseViewsUpdaterAbs {
     private boolean dbIsUpToDate() { return SessionWrapper.wrap(checker); };
 
     protected abstract String createStatement(List<Map<String, List>> data, List<String> metrics, Long webpageId);
+
 }

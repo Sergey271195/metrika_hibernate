@@ -1,8 +1,8 @@
-package Sources.AdvEngine;
+package Sources.SocialNetwork;
 
 import Interfaces.Fetcher;
 import Interfaces.JsonParser;
-import Sources.Abstract.DatabaseFiller;
+import Sources.Abstract.DatabaseGoalsFiller;
 import Sources.Abstract.SourceManager;
 import components.MetrikaUtils;
 
@@ -12,16 +12,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class AdvEngineFiller extends DatabaseFiller {
+public class SocialNetworkGoalsFiller extends DatabaseGoalsFiller {
 
     private SourceManager sourceManager;
-    private static String dimensions = "ym:s:lastsignAdvEngine";
+    private static String dimensions = "ym:s:lastsignSocialNetwork";
 
     private static String insertQuery =
-            "INSERT INTO goalsadvengine (id, webpage_id, goal_id, date, adv_id, reaches)\nVALUES\n\t";
+            "INSERT INTO goalssocialnetwork (id, webpage_id, goal_id, date, network_id, reaches)\nVALUES\n\t";
 
-    public AdvEngineFiller(SourceManager sourceManager, LocalDate endDate,
-                              Fetcher fetcher, JsonParser parser)
+    public SocialNetworkGoalsFiller(SourceManager sourceManager, LocalDate endDate,
+                                    Fetcher fetcher, JsonParser parser)
     {
         super(dimensions, endDate, parser, fetcher);
         this.sourceManager = sourceManager;
@@ -61,5 +61,4 @@ public class AdvEngineFiller extends DatabaseFiller {
         return data.stream().peek(source -> sourceManager.createNewSourceInstance(source))
                 .collect(Collectors.toMap(MetrikaUtils::getDimensionId, entry -> (List) entry.get("metrics").get(0)));
     }
-
 }

@@ -1,8 +1,8 @@
-package Sources.SearchEngine;
+package Sources.SearchPhrase;
 
 import Interfaces.Fetcher;
 import Interfaces.JsonParser;
-import Sources.Abstract.DatabaseFiller;
+import Sources.Abstract.DatabaseGoalsFiller;
 import Sources.Abstract.SourceManager;
 import components.MetrikaUtils;
 
@@ -12,16 +12,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class SearchEngineFiller extends DatabaseFiller {
+public class SearchPhraseGoalsFiller extends DatabaseGoalsFiller {
 
     private SourceManager sourceManager;
-    private static String dimensions = "ym:s:lastsignSearchEngineRoot";
+    private static String dimensions = "ym:s:lastsignSearchPhrase";
 
     private static String insertQuery =
-            "INSERT INTO goalssearchengine (id, webpage_id, goal_id, date, engine_id, reaches)\nVALUES\n\t";
+            "INSERT INTO goalssearchphrase (id, webpage_id, goal_id, date, phrase_id, reaches)\nVALUES\n\t";
 
-    public SearchEngineFiller(SourceManager sourceManager, LocalDate endDate,
-                              Fetcher fetcher, JsonParser parser)
+    public SearchPhraseGoalsFiller(SourceManager sourceManager, LocalDate endDate,
+                                   Fetcher fetcher, JsonParser parser)
     {
         super(dimensions, endDate, parser, fetcher);
         this.sourceManager = sourceManager;
@@ -39,7 +39,7 @@ public class SearchEngineFiller extends DatabaseFiller {
             String goalInsertValues = insertValues.stream().map(
                     insertValue -> "(nextval('hibernate_sequence'), " + response.get("webpageId") +
                             ", " + response.get("goalId") + ", " + insertValue + ")"
-                    ).collect(Collectors.joining(",\n\t"));
+            ).collect(Collectors.joining(",\n\t"));
             return insertQuery + goalInsertValues + ";";
         }
         return null;
@@ -59,7 +59,6 @@ public class SearchEngineFiller extends DatabaseFiller {
 
     private Map<String, List> parseData(List<Map<String, List>> data) {
         return data.stream().peek(source -> sourceManager.createNewSourceInstance(source))
-                .collect(Collectors.toMap(MetrikaUtils::getDimensionId, entry -> (List) entry.get("metrics").get(0)));
+                .collect(Collectors.toMap(MetrikaUtils::getDimensionName, entry -> (List) entry.get("metrics").get(0)));
     }
-
 }

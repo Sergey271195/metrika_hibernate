@@ -4,9 +4,9 @@ import Sources.AdvEngine.AdvEngineManager;
 import Sources.Factory.SourceManagerFactory;
 import Sources.ReferralSource.ReferralSourceManager;
 import Sources.SearchEngine.SearchEngineManager;
+import Sources.SearchEngine.SearchEngineViewsFiller;
 import Sources.SearchPhrase.SearchPhraseManager;
 import Sources.SocialNetwork.SocialNetworkManager;
-import Sources.TrafficSource.TrafficSourceFiller;
 import Sources.TrafficSource.TrafficSourceManager;
 
 import java.time.LocalDate;
@@ -36,6 +36,9 @@ public class DatabaseFiller {
         SearchEngineManager seManager = sourceFactory.getSearchEngineManager();
         //SearchEngineFiller seFiller = new SearchEngineFiller(seManager, date, fetcher, jsonParser);
         //seFiller.fillDatabase();
+
+        SearchEngineViewsFiller sevFiller = new SearchEngineViewsFiller(seManager, date, fetcher, jsonParser);
+        sevFiller.fillDatabase();
 
         //Social network filler
 

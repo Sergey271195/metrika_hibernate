@@ -1,9 +1,10 @@
-package Sources.SearchEngine;
+package Sources.SocialNetwork;
 
 import Interfaces.Fetcher;
 import Interfaces.JsonParser;
 import Sources.Abstract.DatabaseViewsFiller;
 import Sources.Abstract.SourceManager;
+import Sources.AdvEngine.AdvEngineConstants;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,15 +13,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class SearchEngineViewsFiller extends DatabaseViewsFiller {
+public class SocialNetworkViewsFiller extends DatabaseViewsFiller {
 
     private SourceManager sourceManager;
-    private static String dimensions = "ym:s:lastsignSearchEngineRoot";
-    private SearchEngineConstants CONSTANTS = new SearchEngineConstants();
+    private static String dimensions = "ym:s:lastsignSocialNetwork";
+    private SocialNetworkConstants CONSTANTS = new SocialNetworkConstants();
 
     private static Map<String, String> queriesMap = new HashMap<>();
 
-    public SearchEngineViewsFiller(SourceManager sourceManager, LocalDate endDate, Fetcher fetcher, JsonParser parser) {
+    public SocialNetworkViewsFiller(SourceManager sourceManager, LocalDate endDate, Fetcher fetcher, JsonParser parser) {
         super(dimensions, endDate, parser, fetcher);
         this.sourceManager = sourceManager;
     }

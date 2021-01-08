@@ -1,4 +1,4 @@
-package Sources.SearchEngine;
+package Sources.AdvEngine;
 
 import Interfaces.Fetcher;
 import Interfaces.JsonParser;
@@ -12,15 +12,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class SearchEngineViewsFiller extends DatabaseViewsFiller {
+public class AdvEngineViewsFiller extends DatabaseViewsFiller {
 
     private SourceManager sourceManager;
-    private static String dimensions = "ym:s:lastsignSearchEngineRoot";
-    private SearchEngineConstants CONSTANTS = new SearchEngineConstants();
+    private static String dimensions = "ym:s:lastsignAdvEngine";
+    private AdvEngineConstants CONSTANTS = new AdvEngineConstants();
 
     private static Map<String, String> queriesMap = new HashMap<>();
 
-    public SearchEngineViewsFiller(SourceManager sourceManager, LocalDate endDate, Fetcher fetcher, JsonParser parser) {
+    public AdvEngineViewsFiller(SourceManager sourceManager, LocalDate endDate, Fetcher fetcher, JsonParser parser) {
         super(dimensions, endDate, parser, fetcher);
         this.sourceManager = sourceManager;
     }

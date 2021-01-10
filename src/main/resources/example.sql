@@ -41,6 +41,78 @@ SELECT
 FROM r
 GROUP BY goal_id, engine_id;
 
+/*ALL GOAL REACHES BY SEARCH ENGINE FOR PERIOD*/
+WITH final AS (
+    WITH g AS (
+    SELECT * FROM
+    goalssearchengine
+    WHERE date BETWEEN '2020-12-01' AND '2020-12-31'
+        )
+        SELECT
+            webpage_id,
+            engine_id,
+            sum(reaches) AS reaches
+        FROM g
+        GROUP BY webpage_id, engine_id
+)
+SELECT
+    w.name AS webpage,
+    engine_id,
+    reaches
+FROM final
+LEFT JOIN webpage as w
+ON final.webpage_id = w.pageid;
+
+/*ALL VIEWS BY SEARCH ENGINE FOR PERIOD*/
+
+WITH r AS (
+    SELECT * FROM
+    viewssearchengine
+    WHERE webpage_id = 62401888
+    AND date BETWEEN '2020-12-01' AND '2020-12-09'
+)
+SELECT
+    engine_id,
+    sum(reaches)
+FROM r
+GROUP BY webpage_id, engine_id;
+
+WITH r AS (
+    SELECT * FROM
+    viewssearchengine
+    WHERE webpage_id = 62401888
+    AND date BETWEEN '2021-01-01' AND '2021-01-09'
+)
+SELECT
+    engine_id,
+    sum(reaches)
+FROM r
+GROUP BY webpage_id, engine_id;
+
+WITH r AS (
+    SELECT * FROM
+    purchasessearchengine
+    WHERE webpage_id = 62401888
+    AND date BETWEEN '2020-12-01' AND '2020-12-09'
+)
+SELECT
+    engine_id,
+    sum(reaches)
+FROM r
+GROUP BY webpage_id, engine_id;
+
+WITH r AS (
+    SELECT * FROM
+    purchasessearchengine
+    WHERE webpage_id = 62401888
+    AND date BETWEEN '2021-01-01' AND '2021-01-09'
+)
+SELECT
+    engine_id,
+    sum(reaches)
+FROM r
+GROUP BY webpage_id, engine_id;
+
 /*PARTICULAR GOAL REACHES BY SOCIAL NETWORK FOR PERIOD*/
 WITH r AS(
     SELECT* FROM

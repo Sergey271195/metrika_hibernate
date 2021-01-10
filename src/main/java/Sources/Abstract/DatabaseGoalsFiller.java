@@ -43,7 +43,7 @@ public abstract class DatabaseGoalsFiller {
         List<Webpage> webpages = WebpageManager.fetchWebpagesFromDBWithoutTransaction(session);
         int counter = 0;
         for (Webpage webpage: webpages) {
-            //Webpage webpage = session.get(Webpage.class, 54298305L);
+            //Webpage webpage = session.get(Webpage.class, 62401888L);
             counter++;
             System.out.println(counter);
             List<Goal> goals = GoalManager.getAllGoalsFromDBForCounter(session, webpage);

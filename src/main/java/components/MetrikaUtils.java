@@ -17,6 +17,7 @@ public class MetrikaUtils {
     public static String COUNTERS_URI = "https://api-metrika.yandex.net/management/v1/counters";
     public static String JANDEX_STAT = "https://api-metrika.yandex.net/stat/v1/data?";
     public static String JANDEX_STAT_COMPARE = "https://api-metrika.yandex.net/stat/v1/data/comparison?";
+    public static String JANDEX_DRILLDOWN = "https://api-metrika.yandex.net/stat/v1/data/drilldown?";
 
     public static List<List<Goal>> splitGoals(List<Goal> goals) {
 

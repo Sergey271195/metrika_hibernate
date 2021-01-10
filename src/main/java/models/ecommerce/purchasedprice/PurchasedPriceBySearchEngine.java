@@ -9,7 +9,10 @@ import java.time.LocalDate;
 
 
 @Entity
-@Table(name = "pricesearchengine")
+@Table(
+        name = "pricesearchengine",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"webpage_id", "engine_id", "date"})}
+        )
 public class PurchasedPriceBySearchEngine {
 
     @Id

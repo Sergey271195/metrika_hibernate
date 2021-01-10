@@ -16,6 +16,7 @@ public class TrafficSourceGoalsFiller extends DatabaseGoalsFiller {
 
     private SourceManager sourceManager;
     private static String dimensions = "ym:s:lastsignTrafficSource";
+    private String filter = "&filters=ym:s:trafficSource=='recommend'";
 
     private static String insertQuery =
             "INSERT INTO goalstrafficsource (id, webpage_id, goal_id, date, source_id, reaches)\nVALUES\n\t";

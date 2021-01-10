@@ -8,7 +8,10 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "viewssearchengine")
+@Table(
+        name = "viewssearchengine",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"webpage_id", "engine_id", "date"})}
+        )
 public class ViewsBySearchEngine {
 
     @Id

@@ -37,8 +37,8 @@ public class DatabaseFiller {
         //TrafficSourceGoalsFiller tsFiller = new TrafficSourceGoalsFiller(tsManager, date, fetcher, jsonParser);
         //tsFiller.fillDatabase();
 
-        TrafficSourceViewsFiller tsvFiller = new TrafficSourceViewsFiller(tsManager, date, fetcher, jsonParser);
-        tsvFiller.fillDatabase();
+        //TrafficSourceViewsFiller tsvFiller = new TrafficSourceViewsFiller(tsManager, date, fetcher, jsonParser);
+        //tsvFiller.fillDatabase();
 
         //Search engine filler
 

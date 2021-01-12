@@ -3,8 +3,12 @@ import Implementation.JsonParserImp;
 import Sources.Factory.SourceManagerFactory;
 import Implementation.SessionManagerImp;
 import Interfaces.SessionManager;
+import managers.WebpageManager;
+import models.Webpage;
+import models.WebpageUpdater;
 
 import java.time.LocalDate;
+import java.util.List;
 
 
 public class Entrypoint {
@@ -25,7 +29,6 @@ public class Entrypoint {
 
         //NecessaryQueries nq = new NecessaryQueries(sessionManager);
         //nq.createSelectQueryForCounterPeriods();
-
 
     }
 

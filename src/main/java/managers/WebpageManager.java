@@ -39,15 +39,17 @@ public class WebpageManager implements Wrappable<List<Webpage>> {
     public static List<Webpage> fetchWebpagesFromDB (Session session) {
         Transaction tx = session.beginTransaction();
         List<Webpage> webpages = session
-                .createQuery("SELECT m FROM Webpage m", Webpage.class)
-                    .getResultList();
+                .createQuery("SELECT m FROM Webpage m WHERE actual = :actual", Webpage.class)
+                .setParameter("actual", true)
+                .getResultList();
         tx.commit();
         return webpages;
     }
 
     public static List<Webpage> fetchWebpagesFromDBWithoutTransaction (Session session) {
         List<Webpage> webpages = session
-                .createQuery("SELECT m FROM Webpage m", Webpage.class)
+                .createQuery("SELECT m FROM Webpage m WHERE actual = :actual", Webpage.class)
+                .setParameter("actual", true)
                 .getResultList();
         return webpages;
     }
@@ -71,7 +73,7 @@ public class WebpageManager implements Wrappable<List<Webpage>> {
                 .collect(Collectors.joining(","));
         Transaction tx = session.beginTransaction();
         List pageIds = session.createSQLQuery(
-                "SELECT pageId FROM webpage WHERE pageID NOT IN (" + pagesWithoutGoals + ");"
+                "SELECT pageId FROM webpage WHERE actual = true AND pageID NOT IN (" + pagesWithoutGoals + ");"
         ).addScalar("pageId", new LongType()).list();
         tx.commit();
         return pageIds;
@@ -81,7 +83,8 @@ public class WebpageManager implements Wrappable<List<Webpage>> {
     @Override
     public List<Webpage> wrap(Session session) {
         List<Webpage> webpages = session
-                .createQuery("SELECT m FROM Webpage m", Webpage.class)
+                .createQuery("SELECT m FROM Webpage m WHERE actual = :actual", Webpage.class)
+                .setParameter("actual", true)
                 .getResultList();
         return webpages;
     }
@@ -90,29 +93,10 @@ public class WebpageManager implements Wrappable<List<Webpage>> {
         return SessionWrapper.wrap(this::wrap);
     }
 
-
-    public void SetCommercialWebpages(Fetcher fetcher, JsonParser parser, SessionManager sessionManager) {
-        Session session = sessionManager.startSession();
-        List<Long> webpages = getAllWebpageIdsList(session);
-
-        Transaction tx = session.beginTransaction();
-        for (Long webpageId: webpages) {
-            String checkQuery = MetrikaUtils.JANDEX_STAT_BY_TIME + webpageId +
-                    "&metrics=ym:s:ecommercePurchases&date1=2020-01-03&date2=2020-01-03";
-            Map<String, Object> response = parser.parse(fetcher.fetch(checkQuery));
-            if (response.get("error") == null) {
-                Webpage wp = session.get(Webpage.class, webpageId);
-                wp.setCommercial(true);
-            }
-        }
-        tx.commit();
-        session.close();
-
-    }
-
     public static List<Long> getCommercialWebpagesIds(SessionManager sm)  {
         Session session = sm.startSession();
-        List pageIds = session.createSQLQuery("SELECT pageId FROM webpage WHERE commercial = true")
+        List pageIds = session.createSQLQuery("SELECT pageId FROM webpage WHERE commercial = :commercial")
+                .setParameter("commercial", true)
                 .addScalar("pageId", new LongType()).list();
         session.close();
         return pageIds;
@@ -120,7 +104,8 @@ public class WebpageManager implements Wrappable<List<Webpage>> {
 
     public static List<Long> getNonCommercialWebpagesIds(SessionManager sm)  {
         Session session = sm.startSession();
-        List pageIds = session.createSQLQuery("SELECT pageId FROM webpage WHERE commercial = false")
+        List pageIds = session.createSQLQuery("SELECT pageId FROM webpage WHERE commercial = :commercial")
+                .setParameter("commercial", false)
                 .addScalar("pageId", new LongType()).list();
         session.close();
         return pageIds;

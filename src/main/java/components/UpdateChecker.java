@@ -26,7 +26,7 @@ public class UpdateChecker implements Wrappable<Boolean> {
                 .append("WITH update AS (SELECT DISTINCT webpage_id AS wid FROM ").append(tableName)
                 .append(" WHERE date = '" ).append(yesterday)
                 .append("' GROUP BY webpage_id) SELECT DISTINCT pageId ")
-                .append("FROM webpage WHERE pageId NOT IN (SELECT wid FROM update);");
+                .append("FROM webpage WHERE actual = true AND pageId NOT IN (SELECT wid FROM update);");
         return checkForUpdate.toString();
     }
 

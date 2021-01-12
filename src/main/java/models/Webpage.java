@@ -20,6 +20,9 @@ public class Webpage {
     @Column(columnDefinition = "boolean default false")
     private boolean commercial;
 
+    @Column(columnDefinition = "boolean default true")
+    private boolean actual;
+
     public long getPageId() {
         return pageId;
     }
@@ -58,5 +61,13 @@ public class Webpage {
 
     public void setCommercial(boolean commercial) {
         this.commercial = commercial;
+    }
+
+    public boolean isActual() {
+        return actual;
+    }
+
+    public void setActual(boolean actual) {
+        this.actual = actual;
     }
 }

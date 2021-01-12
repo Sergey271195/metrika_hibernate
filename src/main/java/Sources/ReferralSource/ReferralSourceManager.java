@@ -29,7 +29,17 @@ public class ReferralSourceManager extends SourceManager<ReferralSource> {
         if (!sourceExists(dimensions.get("name"))) {
             ReferralSource newReferral = createNewReferralSource(dimensions.get("name"), dimensions.get("name"));
             persistNewEngine(newReferral);
-            updateSourcesMap();
+            this.sources.put(newReferral.getId(), newReferral);
+        }
+    }
+
+    public void createNewSourceInstanceForFiller(Map<String, List> responseData) {
+        Map<String, String> dimensions = (Map) responseData.get("dimension");
+        System.out.println(dimensions.get("name"));
+        if (!sourceExists(dimensions.get("name"))) {
+            ReferralSource newReferral = createNewReferralSource(dimensions.get("name"), dimensions.get("name"));
+            persistNewEngine(newReferral);
+            this.sources.put(newReferral.getId(), newReferral);
         }
     }
 

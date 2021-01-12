@@ -8,10 +8,13 @@ import components.UpdateQueryExecutor;
 import managers.WebpageManager;
 import models.Webpage;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class DatabaseViewsFiller {
 
@@ -33,17 +36,28 @@ public abstract class DatabaseViewsFiller {
 
     public void fillDatabase() {
         List<Webpage> webpages = new WebpageManager().getWebpagesFromDB();
+        //List<Long> updated = Arrays.asList(59162569L, 62401888L, 19915630L);
+        /*for (Webpage webpage: webpages) {
+            if (!updated.contains(webpage.getPageId())) {
+                System.out.println(webpage.getName() + " - " + webpage.getPageId());
+                Map<String, Object> response = fecthHistoryDataFromMetrika(webpage);
+                String insertQuery = createInsertQuery(response);
+                executeInsertQuery(insertQuery);
+            }
+        }*/
         webpages.stream()
-                .filter(webpage -> webpage.getPageId() != 62401888L)
-                .peek(w -> System.out.println(this.getClass().getSimpleName() + " - " + w.getPageId() + " - " + w.getName()))
+                .filter(webpage -> webpage.getPageId() == 49911565L)
+                .peek(w -> System.out.println(this.getClass().getSimpleName() + " - " + w.getPageId() + " - " + w.getName() + " - " + w.getCreateTime()))
                 .map(webpage -> fecthHistoryDataFromMetrika(webpage))
+                .peek(resp -> System.out.println(resp))
                 .map(this::createInsertQuery).filter(Objects::nonNull)
-                .forEach(query -> System.out.println(query));
-                //.forEach(this::executeInsertQuery);
+                .peek(query -> System.out.println(query))
+                //.forEach(query -> System.out.println(query));
+                .forEach(this::executeInsertQuery);
     }
 
     private Map<String, Object> fecthHistoryDataFromMetrika(Webpage webpage) {
-        String baseUrl = this.dimensions.equals("ym:s:lastsignReferalSource")
+        String baseUrl = this.dimensions.contains("ym:s:lastsignReferalSource")
                 ? MetrikaUtils.JANDEX_DRILLDOWN
                 : MetrikaUtils.JANDEX_STAT_BY_TIME;
         String request = createHistoryRequest(webpage, baseUrl);
